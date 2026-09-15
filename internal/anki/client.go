@@ -219,3 +219,26 @@ func (c *Client) AddNotes(ctx context.Context, deckName, modelName string, notes
 
 	return res, nil
 }
+
+// RefreshGUI forces Anki Desktop's main window to recalculate and refresh its deck view.
+func (c *Client) RefreshGUI(ctx context.Context) error {
+	return c.invoke(ctx, "guiDeckBrowser", nil, nil)
+}
+
+// GetDeckTotal returns the total number of cards stored in the given deck.
+func (c *Client) GetDeckTotal(ctx context.Context, deckName string) (int, error) {
+	type deckStat struct {
+		TotalInDeck int `json:"total_in_deck"`
+	}
+	var stats map[string]deckStat
+	params := map[string][]string{
+		"decks": {deckName},
+	}
+	if err := c.invoke(ctx, "getDeckStats", params, &stats); err != nil {
+		return 0, err
+	}
+	for _, s := range stats {
+		return s.TotalInDeck, nil
+	}
+	return 0, nil
+}

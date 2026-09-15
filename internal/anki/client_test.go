@@ -106,3 +106,40 @@ func TestAnkiClient_AddNotes(t *testing.T) {
 		t.Errorf("expected 1 duplicate, got %d", res.Duplicate)
 	}
 }
+
+func TestAnkiClient_RefreshGUIAndGetDeckTotal(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var req Request
+		json.NewDecoder(r.Body).Decode(&req)
+
+		if req.Action == "guiDeckBrowser" {
+			resp := Response{
+				Result: json.RawMessage(`null`),
+			}
+			json.NewEncoder(w).Encode(resp)
+			return
+		}
+
+		if req.Action == "getDeckStats" {
+			resp := Response{
+				Result: json.RawMessage(`{"123": {"deck_id": 123, "name": "Inbox", "total_in_deck": 42}}`),
+			}
+			json.NewEncoder(w).Encode(resp)
+			return
+		}
+	}))
+	defer server.Close()
+
+	client := NewClient(server.URL)
+	if err := client.RefreshGUI(context.Background()); err != nil {
+		t.Fatalf("RefreshGUI failed: %v", err)
+	}
+
+	total, err := client.GetDeckTotal(context.Background(), "Inbox")
+	if err != nil {
+		t.Fatalf("GetDeckTotal failed: %v", err)
+	}
+	if total != 42 {
+		t.Errorf("expected 42 total, got %d", total)
+	}
+}

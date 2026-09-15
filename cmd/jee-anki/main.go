@@ -211,17 +211,25 @@ func main() {
 		return
 	}
 
+	// Trigger UI refresh in Anki Desktop
+	_ = ankiClient.RefreshGUI(ctx)
+	totalInDeck, _ := ankiClient.GetDeckTotal(ctx, anki.DefaultDeckName)
+
 	// 7. Completion Summary
 	fmt.Println()
 	fmt.Println(tui.SuccessStyle.Render("=================================================="))
 	fmt.Println(tui.SuccessStyle.Render("                 SUCCESS!                         "))
 	fmt.Println(tui.SuccessStyle.Render("=================================================="))
-	fmt.Printf("• Target Deck:             %s\n", tui.HighlightStyle.Render(anki.DefaultDeckName))
-	fmt.Printf("• Cards Successfully Added: %s\n", tui.SuccessStyle.Render(fmt.Sprintf("%d", result.Added)))
+	fmt.Printf("• Target Deck:              %s\n", tui.HighlightStyle.Render(anki.DefaultDeckName))
+	fmt.Printf("• Cards Added This Session: %s\n", tui.SuccessStyle.Render(fmt.Sprintf("%d", result.Added)))
+	if totalInDeck > 0 {
+		fmt.Printf("• Total Cards in '%s':     %s\n", anki.DefaultDeckName, tui.HighlightStyle.Render(fmt.Sprintf("%d", totalInDeck)))
+	}
 	if result.Duplicate > 0 {
 		fmt.Printf("• Duplicate Cards Skipped:  %s\n", tui.WarningStyle.Render(fmt.Sprintf("%d", result.Duplicate)))
 	}
-	fmt.Printf("• Tags Applied:            %s\n\n", tui.HighlightStyle.Render(strings.Join(confirmedTags, ", ")))
+	fmt.Printf("• Tags Applied:             %s\n\n", tui.HighlightStyle.Render(strings.Join(confirmedTags, ", ")))
 	fmt.Println("All cards are ready for your review in Anki Desktop under the 'Inbox' deck.")
-	fmt.Println("You can inspect them, edit them, and move them into your main subject decks.")
+	fmt.Println(tui.SubtitleStyle.Render("💡 Tip: Press 'B' in Anki Desktop to open the Card Browser and view all cards."))
+	fmt.Println(tui.SubtitleStyle.Render("   (Anki's home screen column only displays 'Due Today', capped at 20 new cards/day by default)."))
 }
