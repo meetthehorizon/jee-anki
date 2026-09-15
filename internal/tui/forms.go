@@ -36,16 +36,12 @@ func PromptRetryAnki() (bool, error) {
 // PromptAPIKey prompts the user to enter their Gemini API key or confirm existing.
 func PromptAPIKey(currentKey string) (string, error) {
 	if currentKey != "" {
-		maskedKey := currentKey
-		if len(currentKey) > 8 {
-			maskedKey = currentKey[:4] + "..." + currentKey[len(currentKey)-4:]
-		}
-
 		var useExisting bool
 		confirmForm := huh.NewForm(
 			huh.NewGroup(
 				huh.NewConfirm().
-					Title(fmt.Sprintf("Saved API Key found (%s). Use it?", maskedKey)).
+					Title("Saved Google Gemini API Key found. Use it?").
+					Description("Key is safely loaded from local ./jee-anki.config.json (hidden for screen recording)").
 					Affirmative("Yes, use saved key").
 					Negative("No, enter a new key").
 					Value(&useExisting),
@@ -66,8 +62,9 @@ func PromptAPIKey(currentKey string) (string, error) {
 		huh.NewGroup(
 			huh.NewInput().
 				Title("Enter your Google Gemini API Key").
-				Description("Get your 100% free key at: https://aistudio.google.com/").
-				Placeholder("AIzaSy...").
+				Description("Get your free key at: https://aistudio.google.com/ (Input is masked for recording privacy)").
+				Placeholder("Paste API key here...").
+				EchoMode(huh.EchoModePassword).
 				Value(&newKey).
 				Validate(func(s string) error {
 					if strings.TrimSpace(s) == "" {

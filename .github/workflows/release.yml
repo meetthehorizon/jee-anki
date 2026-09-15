@@ -29,13 +29,13 @@ jobs:
 
       - name: Build Linux Binary
         run: |
-          GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s -w" -o jee-anki-linux-amd64 ./cmd/jee-anki
+          GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s -w -X 'github.com/meetthehorizon/jee-anki/internal/tui.Version=${{ github.ref_name }}'" -o jee-anki-linux-amd64 ./cmd/jee-anki
           chmod +x jee-anki-linux-amd64 run.sh
           tar -czvf jee-anki-linux-amd64.tar.gz jee-anki-linux-amd64 run.sh jee-anki.desktop
 
       - name: Build Windows Executable
         run: |
-          GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s -w" -o jee-anki-windows-amd64.exe ./cmd/jee-anki
+          GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s -w -X 'github.com/meetthehorizon/jee-anki/internal/tui.Version=${{ github.ref_name }}'" -o jee-anki-windows-amd64.exe ./cmd/jee-anki
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

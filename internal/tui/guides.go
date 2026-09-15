@@ -5,9 +5,13 @@ import (
 	"strings"
 )
 
+// Version is the current release version of jee-anki.
+// It can be overridden at compile time via -ldflags="-X 'github.com/meetthehorizon/jee-anki/internal/tui.Version=v...'"
+var Version = "v0.1.2"
+
 // PrintBanner prints the application title header.
 func PrintBanner() {
-	title := TitleStyle.Render("jee-anki (v1.0.0)")
+	title := TitleStyle.Render(fmt.Sprintf("jee-anki (%s)", Version))
 	subtitle := SubtitleStyle.Render("High-Yield JEE & STEM Flashcard Extractor for Anki")
 	fmt.Println(title)
 	fmt.Println(subtitle)
