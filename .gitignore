@@ -1,0 +1,16 @@
+# Direnv
+.direnv/
+
+# Local app configuration (contains Gemini API key)
+jee-anki.config.json
+
+# Binaries
+/jee-anki
+/jee-anki.exe
+*.exe
+dist/
+bin/
+
+# Temporary files & tests
+*.tmp
+*.pdf.chunk*
