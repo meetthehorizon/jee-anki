@@ -78,12 +78,26 @@ To make sure your main study decks stay clean and organized:
 - Click **"More info"** and then click **"Run anyway"**.
 
 ### Q: Which Gemini model should I choose?
-- **`gemini-2.0-flash` (Recommended):** Blazing fast, multimodal PDF vision, and completely free.
-- **`gemini-2.5`:** Great if your notes are extremely dense or complex.
-- You can also pick **Enter custom model name...** if you want to experiment with newer models.
+- **`gemini-flash-latest` (Recommended):** Blazing fast, multimodal PDF vision, 100% free, and automatically stays up-to-date with Google's latest production Flash model.
+- **`gemini-3.8-flash` / `gemini-3.6-flash`:** Excellent direct model pins.
+- **`gemini-pro-latest`:** Great if your notes are exceptionally dense or complex.
+- You can also pick **Enter custom model name...** if you want to experiment with other Google models.
 
 ### Q: How do tags work across multiple sessions?
 `jee-anki` automatically remembers the tags you use in `./jee-anki.config.json`. When you parse new notes, it suggests consistent tags (e.g. normalizing `math` to `maths`) so your Anki tag taxonomy stays tidy.
+
+---
+
+## 🗺️ Roadmap & Vision
+
+`jee-anki` began as a laser-focused tool for JEE (Main & Advanced) and STEM students. The long-term vision is to expand into a universal flashcard engine for rigorous competitive examinations, including:
+
+- **UPSC Civil Services & State PSCs:** Dedicated prompt templates for Indian Polity (Articles, Amendments, landmark Supreme Court cases), Modern & Ancient History (timelines, treaties, acts), Geography (rivers, passes, mineral belts), Economy, and Environment.
+- **Multi-PDF Batch Processing:** Queue an entire subject folder of lecture PDFs to process sequentially.
+- **Cloze Deletion Mode:** Option to generate Anki Cloze notes (`{{c1::...}}`) alongside standard Basic notes.
+- **Diagram & Media Extraction:** Automatically crop and attach circuit schematics, anatomical sketches, and maps directly to the Anki media collection.
+
+See [TODO.md](./TODO.md) for current backlog and contribution areas.
 
 ---
 
