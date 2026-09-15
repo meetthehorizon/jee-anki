@@ -105,8 +105,7 @@ func main() {
 		return
 	}
 
-	// 4. Chunk & Extract Cards
-	fmt.Printf("%s Analyzing %s...\n", tui.HighlightStyle.Render("►"), tui.HighlightStyle.Render(selectedPDF))
+	// 4. Inspect & Confirm Processing
 	chunks, err := pdf.ChunkPDF(filepath.Join(currentDir, selectedPDF), pdf.DefaultPagesPerChunk)
 	if err != nil {
 		fmt.Printf("%s Failed to read PDF pages: %v\n", tui.ErrorStyle.Render("[!]"), err)
@@ -114,8 +113,16 @@ func main() {
 	}
 
 	totalPages := chunks[0].TotalPages
-	fmt.Printf("%s Document has %d page(s). Processing in %d chunk(s) with model %s...\n\n",
-		tui.SuccessStyle.Render("✓"),
+
+	proceed, err := tui.PromptConfirmStart(selectedPDF, totalPages, len(chunks), cfg.SelectedModel)
+	if err != nil || !proceed {
+		fmt.Println(tui.WarningStyle.Render("\nExtraction canceled."))
+		return
+	}
+
+	fmt.Printf("\n%s Processing %s (%d page(s), %d chunk(s)) with model %s...\n\n",
+		tui.SuccessStyle.Render("►"),
+		tui.HighlightStyle.Render(selectedPDF),
 		totalPages,
 		len(chunks),
 		tui.CodeStyle.Render(cfg.SelectedModel),

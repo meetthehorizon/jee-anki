@@ -165,22 +165,17 @@ func PromptSelectPDF(pdfs []string) (string, error) {
 		return "", errors.New("no PDFs available")
 	}
 
-	if len(pdfs) == 1 {
-		fmt.Printf("%s Auto-selected only PDF found: %s\n\n", SuccessStyle.Render("✓"), HighlightStyle.Render(pdfs[0]))
-		return pdfs[0], nil
-	}
-
 	options := make([]huh.Option[string], len(pdfs))
 	for i, p := range pdfs {
 		options[i] = huh.NewOption(p, p)
 	}
 
-	var selected string
+	selected := pdfs[0]
 	form := huh.NewForm(
 		huh.NewGroup(
 			huh.NewSelect[string]().
 				Title("Select PDF Note to Process").
-				Description("Use arrow keys or mouse to pick one file").
+				Description("Choose which PDF note to parse into flashcards").
 				Options(options...).
 				Value(&selected),
 		),
@@ -191,6 +186,30 @@ func PromptSelectPDF(pdfs []string) (string, error) {
 	}
 
 	return selected, nil
+}
+
+// PromptConfirmStart asks the user to confirm before starting extraction.
+func PromptConfirmStart(fileName string, totalPages, chunkCount int, modelName string) (bool, error) {
+	title := fmt.Sprintf("Ready to extract flashcards from '%s'?", fileName)
+	desc := fmt.Sprintf("Document: %d page(s) | Chunks: %d | Model: %s", totalPages, chunkCount, modelName)
+
+	var proceed bool = true
+	form := huh.NewForm(
+		huh.NewGroup(
+			huh.NewConfirm().
+				Title(title).
+				Description(desc).
+				Affirmative("Start Extraction").
+				Negative("Cancel").
+				Value(&proceed),
+		),
+	)
+
+	if err := form.Run(); err != nil {
+		return false, err
+	}
+
+	return proceed, nil
 }
 
 // PromptConfirmTags displays AI-suggested tags and allows the user to accept or edit them.
