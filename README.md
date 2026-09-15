@@ -16,14 +16,17 @@
 
 ### Step 2: Download `jee-anki`
 1. Go to the [**Releases Page**](https://github.com/meetthehorizon/jee-anki/releases).
-2. Download the binary for your operating system:
+2. Download for your operating system:
    - **Windows:** `jee-anki-windows-amd64.exe`
-   - **Linux:** `jee-anki-linux-amd64`
+   - **Linux (Recommended):** `jee-anki-linux-amd64.tar.gz` (extract it into your study folder)
+   - **Linux (Standalone Binary):** `jee-anki-linux-amd64`
 3. Put the downloaded file in a folder where you keep your study PDFs.
+   - *Linux tip:* If you downloaded the standalone binary, make sure it is marked executable (`chmod +x jee-anki-linux-amd64` or right-click → Properties → Permissions → "Allow executing as program").
 
 ### Step 3: Run and Extract!
 1. Drop your PDF notes (e.g. `Current_Electricity.pdf`, `Calculus_Formulas.pdf`, `Aldehydes_and_Ketones.pdf`) in the **same folder** as `jee-anki`.
-2. **Double-click** `jee-anki` to run it:
+2. **Double-click** `jee-anki` (or double-click `run.sh` / `jee-anki.desktop` on Linux) to run it:
+   - On Linux, it will automatically detect and open your desktop terminal (Alacritty, Konsole, GNOME Terminal, etc.).
    - It will check that Anki is running.
    - It will ask for your free Google Gemini API Key (stored locally so you only enter it once).
    - Pick your PDF and watch it extract flashcards with live progress!

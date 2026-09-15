@@ -12,6 +12,7 @@ import (
 	"github.com/meetthehorizon/jee-anki/internal/config"
 	"github.com/meetthehorizon/jee-anki/internal/gemini"
 	"github.com/meetthehorizon/jee-anki/internal/pdf"
+	"github.com/meetthehorizon/jee-anki/internal/terminal"
 	"github.com/meetthehorizon/jee-anki/internal/tui"
 )
 
@@ -23,7 +24,10 @@ func waitForExit() {
 }
 
 func main() {
-	// Guaranteed pause so Windows console never closes abruptly on completion or error
+	// If launched from a GUI file manager without a TTY on Linux, auto-launch a terminal window
+	terminal.EnsureTerminal()
+
+	// Guaranteed pause so terminal never closes abruptly on completion or error
 	defer func() {
 		if r := recover(); r != nil {
 			fmt.Printf("\n%s Unexpected runtime error: %v\n", tui.ErrorStyle.Render("[!]"), r)

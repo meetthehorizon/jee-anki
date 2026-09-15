@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=jee-anki
+Comment=High-Yield JEE & STEM Flashcard Extractor for Anki
+Exec=jee-anki-linux-amd64
+Icon=accessories-calculator
+Terminal=true
+Categories=Education;Science;

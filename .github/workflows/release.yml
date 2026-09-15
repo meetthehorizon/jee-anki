@@ -30,6 +30,8 @@ jobs:
       - name: Build Linux Binary
         run: |
           GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s -w" -o jee-anki-linux-amd64 ./cmd/jee-anki
+          chmod +x jee-anki-linux-amd64 run.sh
+          tar -czvf jee-anki-linux-amd64.tar.gz jee-anki-linux-amd64 run.sh jee-anki.desktop
 
       - name: Build Windows Executable
         run: |
@@ -40,5 +42,6 @@ jobs:
         with:
           files: |
             jee-anki-linux-amd64
+            jee-anki-linux-amd64.tar.gz
             jee-anki-windows-amd64.exe
           generate_release_notes: true

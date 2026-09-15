@@ -6,6 +6,7 @@ require (
 	github.com/charmbracelet/huh v1.0.0
 	github.com/charmbracelet/lipgloss v1.1.0
 	github.com/pdfcpu/pdfcpu v0.15.0
+	golang.org/x/term v0.45.0
 )
 
 require (
