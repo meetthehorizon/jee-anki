@@ -6,6 +6,7 @@ jee-anki.config.json
 
 # Binaries
 /jee-anki
+/jee-anki*
 /jee-anki.exe
 *.exe
 dist/

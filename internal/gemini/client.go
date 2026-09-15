@@ -209,7 +209,7 @@ func (c *Client) ExtractFromPDFChunk(ctx context.Context, pdfBytes []byte) (*Ext
 			case apiErr.Error.Code == 400 && strings.Contains(apiErr.Error.Message, "API_KEY_INVALID"):
 				return nil, fmt.Errorf("invalid Google API key. Please verify your key at https://aistudio.google.com/")
 			case apiErr.Error.Code == 404:
-				return nil, fmt.Errorf("model '%s' not found or not supported. Try 'gemini-2.0-flash'", c.model)
+				return nil, fmt.Errorf("model '%s' not found or deprecated: %s. Try 'gemini-flash-latest'", c.model, apiErr.Error.Message)
 			case apiErr.Error.Code == 429:
 				return nil, fmt.Errorf("google Gemini rate limit exceeded. Please wait a few seconds and retry")
 			default:

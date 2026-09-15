@@ -14,13 +14,13 @@ func TestConfigLoadSave(t *testing.T) {
 	if err != nil {
 		t.Fatalf("expected nil error on missing config, got %v", err)
 	}
-	if cfg.SelectedModel != ModelGemini20Flash {
-		t.Errorf("expected default model %s, got %s", ModelGemini20Flash, cfg.SelectedModel)
+	if cfg.SelectedModel != ModelGeminiFlashLatest {
+		t.Errorf("expected default model %s, got %s", ModelGeminiFlashLatest, cfg.SelectedModel)
 	}
 
 	// 2. Modify and save
 	cfg.APIKey = "AIzaSyTestKey123"
-	cfg.SelectedModel = ModelGemini25Flash
+	cfg.SelectedModel = ModelGemini38Flash
 	cfg.AddKnownTags([]string{"calculus", "integration-tricks", "new-tag"})
 
 	if err := cfg.Save(configPath); err != nil {
@@ -35,8 +35,8 @@ func TestConfigLoadSave(t *testing.T) {
 	if loaded.APIKey != "AIzaSyTestKey123" {
 		t.Errorf("expected APIKey to match, got %s", loaded.APIKey)
 	}
-	if loaded.SelectedModel != ModelGemini25Flash {
-		t.Errorf("expected SelectedModel %s, got %s", ModelGemini25Flash, loaded.SelectedModel)
+	if loaded.SelectedModel != ModelGemini38Flash {
+		t.Errorf("expected SelectedModel %s, got %s", ModelGemini38Flash, loaded.SelectedModel)
 	}
 
 	// Verify new tag exists

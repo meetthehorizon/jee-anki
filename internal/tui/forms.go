@@ -93,14 +93,15 @@ func PromptModel(currentModel string) (string, error) {
 	const customOption = "__custom__"
 
 	if currentModel == "" {
-		currentModel = config.ModelGemini20Flash
+		currentModel = config.ModelGeminiFlashLatest
 	}
 
 	options := []huh.Option[string]{
-		huh.NewOption("gemini-2.0-flash (Recommended: Free, Fast & Accurate)", config.ModelGemini20Flash),
-		huh.NewOption("gemini-2.0 (Standard)", config.ModelGemini20),
-		huh.NewOption("gemini-2.5-flash (Latest Flash Preview)", config.ModelGemini25Flash),
-		huh.NewOption("gemini-2.5 (Pro reasoning)", config.ModelGemini25),
+		huh.NewOption("gemini-flash-latest (Recommended: Free, Fastest & Always Up-to-Date)", config.ModelGeminiFlashLatest),
+		huh.NewOption("gemini-3.8-flash (Latest Flash 3.8)", config.ModelGemini38Flash),
+		huh.NewOption("gemini-3.6-flash (Fast & Stable)", config.ModelGemini36Flash),
+		huh.NewOption("gemini-3.5-flash (Fast)", config.ModelGemini35Flash),
+		huh.NewOption("gemini-pro-latest (Pro Reasoning)", config.ModelGeminiProLatest),
 		huh.NewOption("Enter custom model name...", customOption),
 	}
 

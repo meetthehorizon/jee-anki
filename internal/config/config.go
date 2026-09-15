@@ -11,18 +11,20 @@ import (
 const (
 	DefaultConfigFileName = "jee-anki.config.json"
 
-	ModelGemini20Flash = "gemini-2.0-flash"
-	ModelGemini20      = "gemini-2.0"
-	ModelGemini25Flash = "gemini-2.5-flash"
-	ModelGemini25      = "gemini-2.5"
+	ModelGeminiFlashLatest = "gemini-flash-latest"
+	ModelGemini38Flash     = "gemini-3.8-flash"
+	ModelGemini36Flash     = "gemini-3.6-flash"
+	ModelGemini35Flash     = "gemini-3.5-flash"
+	ModelGeminiProLatest   = "gemini-pro-latest"
 )
 
 // SupportedModels lists the standard choices shown in the UI.
 var SupportedModels = []string{
-	ModelGemini20Flash,
-	ModelGemini20,
-	ModelGemini25Flash,
-	ModelGemini25,
+	ModelGeminiFlashLatest,
+	ModelGemini38Flash,
+	ModelGemini36Flash,
+	ModelGemini35Flash,
+	ModelGeminiProLatest,
 }
 
 // Config represents persistent application settings saved in the local folder.
@@ -36,7 +38,7 @@ type Config struct {
 func NewDefaultConfig() *Config {
 	return &Config{
 		APIKey:        "",
-		SelectedModel: ModelGemini20Flash,
+		SelectedModel: ModelGeminiFlashLatest,
 		KnownTags: []string{
 			"physics",
 			"chemistry",
@@ -78,7 +80,7 @@ func Load(optionalPath ...string) (*Config, error) {
 	}
 
 	if cfg.SelectedModel == "" {
-		cfg.SelectedModel = ModelGemini20Flash
+		cfg.SelectedModel = ModelGeminiFlashLatest
 	}
 
 	return cfg, nil
